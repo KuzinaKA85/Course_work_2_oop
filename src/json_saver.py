@@ -2,7 +2,7 @@ import json
 import os
 from abc import ABC, abstractmethod
 from typing import Any
-from src.headhunter_api import HeadHunterAPI
+from src.hh_api import HeadHunterAPI
 
 
 class JSONWorker(ABC):
