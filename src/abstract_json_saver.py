@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 
 
 class AbstractJSONSaver(ABC):
-    """Абстрактный класс для хранения (файлы/БД)."""
+    """Абстрактный класс для работы с файлами"""
 
     @abstractmethod
     def add_vacancy(self, vacancy: Dict) -> None:

@@ -17,6 +17,7 @@ class HeadHunterAPI(AbstractHHApi):
 
     def __connection_setup(self) -> None:
         """Отправляет запрос на базовый URL. Приватный метод, доступен только внутри класса"""
+
         response = requests.get(self.__base_url, headers=self.__headers)
         status_code = response.status_code
         if status_code == 200:
@@ -26,14 +27,12 @@ class HeadHunterAPI(AbstractHHApi):
 
     def public_connection_setup(self) -> None:
         """Это публичный метод, который вызывает приватный метод"""
+
         self.__connection_setup()
 
     def get_vacancies(self, keyword: str) -> List[Any] | None:
-        """Получает список вакансий с сервера.
-        Args:
-            keyword (str): Поисковый запрос для фильтрации вакансий.
-        Returns:
-            list: Список словарей с данными о вакансиях."""
+        """Получает список вакансий с сервера"""
+
         self.public_connection_setup()
         params = {"text": keyword, "area": 66, "page": 0, "per_page": 100, "only_with_salary": True}
         while params["page"] != 20:
@@ -50,10 +49,3 @@ class HeadHunterAPI(AbstractHHApi):
             except json.JSONDecodeError:
                 print("Ошибка при парсинге JSON-ответа.")
                 return []
-
-
-if __name__ == "__main__":
-    keyword = input("Введите поисковый запрос: ")
-    hh = HeadHunterAPI()
-    print(hh.public_connection_setup())
-    pprint(hh.get_vacancies(keyword))
