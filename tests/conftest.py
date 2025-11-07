@@ -1,6 +1,6 @@
 import pytest
 
-from src.json_saver import JSONWorker
+from src.json_saver import JSONSaver
 
 
 @pytest.fixture
@@ -43,4 +43,4 @@ def test_data2():
 @pytest.fixture
 def saver(tmpdir):
     file = tmpdir.join("test.json")
-    return JSONWorker(str(file))
+    return JSONSaver(str(file))

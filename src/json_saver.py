@@ -5,22 +5,31 @@ from typing import Any, Dict, List, Optional
 from src.abstract_json_saver import AbstractJSONSaver
 
 
-class JSONWorker(AbstractJSONSaver):
+class JSONSaver(AbstractJSONSaver):
     """Класс для работы с json-файлом"""
 
-    def __init__(self, filename: str = "..data/vacancies.json") -> None:
-        self.__filename = filename
+    def __init__(self, file_name: str = "data/vacancies.json") -> None:
+        self.__file_name = file_name
 
     def __load(self) -> List[Dict]:
-        """Загружаем данные из JSON-файла"""
-        if os.path.exists(self.__filename):
-            with open(self.__filename, "r", encoding="utf-8") as f:
-                return json.load(f)
+        if os.path.exists(self.__file_name):
+            with open(self.__file_name, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                # Если данные в формате {"items": [...]}, возвращаем список вакансий
+                if isinstance(data, dict) and "items" in data:
+                    return data["items"]
+                return data
         return []
 
     def __save(self, data: List[Dict]) -> None:
-        with open(self.__filename, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+        # Создаем директорию, если её нет (исправленная версия)
+        directory = os.path.dirname(self.__file_name)
+        if directory and not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+
+        with open(self.__file_name, "w", encoding="utf-8") as f:
+            # Сохраняем в формате {"items": [...]} для совместимости
+            json.dump({"items": data}, f, ensure_ascii=False, indent=4)
 
     def add_vacancy(self, vacancy: Dict) -> None:
         data = self.__load()

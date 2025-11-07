@@ -49,13 +49,13 @@ class Vacancy:
                 v["name"],
                 v["alternate_url"],
                 v.get("salary"),
-                v["snippet"].get("requirement", "") + v["snippet"].get("responsibility", ""),
+                str(v["snippet"].get("requirement", "") or "") + str(v["snippet"].get("responsibility", "") or ""),
                 v["employer"]["name"],
             )
             for v in data
         ]
 
-if __name__=="__main__":
-    vac1 = Vacancy("Нижний Новгород", 'https://api.hh.ru/vacancies?employer_id=6093775', 100000, 150000)
-    vac1.cast_to_object_list
+# if __name__=="__main__":
+#     vac1 = Vacancy("Нижний Новгород", 'https://api.hh.ru/vacancies?employer_id=6093775', 100000, 150000)
+#     vac1.cast_to_object_list
 
