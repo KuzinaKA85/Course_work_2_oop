@@ -1,5 +1,7 @@
 import pytest
 
+from src.json_saver import JSONWorker
+
 
 @pytest.fixture
 def test_data1():
@@ -37,3 +39,8 @@ def test_data2():
             "employer": {"name": "Company BigData"}
         }
     ]
+
+@pytest.fixture
+def saver(tmpdir):
+    file = tmpdir.join("test.json")
+    return JSONWorker(str(file))
