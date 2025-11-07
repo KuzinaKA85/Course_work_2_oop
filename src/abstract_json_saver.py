@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
 
-class AbstractStorage(ABC):
+class AbstractJSONSaver(ABC):
     """Абстрактный класс для хранения (файлы/БД)."""
 
     @abstractmethod
